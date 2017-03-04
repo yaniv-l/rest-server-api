@@ -1,0 +1,20 @@
+{
+  "name": "api_server",
+  "version": "1.0.0",
+  "description": "Playgroud project to create an api server using node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "author": "Yaniv Levi",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "mongoose": "^4.8.4",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0"
+  }
+}

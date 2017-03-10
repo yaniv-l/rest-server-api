@@ -1,4 +1,18 @@
-const User = require('../modules/user');
+const jwt = require('jwt-simple');
+const User = require('../models/user');
+const config = require('../config');
+
+function tokenForUser(user) {
+  timestamp = new Date().getTime();
+  return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
+}
+
+exports.signin = function(req, res, next) {
+  // User has already had thier email and password auth'd (using the
+  // 'requireAuth' middelware in the router), we now just need  to issue them
+  // with a token
+  res.send({ success: true, token: tokenForUser(req.user) });
+}
 
 exports.signup = function(req, res, next) {
   const email = req.body.email;
@@ -32,7 +46,7 @@ exports.signup = function(req, res, next) {
       if(err) { return next(err); }
 
       // send back a success indications
-      res.json({success: true});
+      res.json({ success: true, token: tokenForUser(user) });
     })
 
 

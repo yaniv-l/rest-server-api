@@ -31,6 +31,19 @@ userSchema.pre('save', function(next) {
   });
 });
 
+// Add method to the user model - any function added under the userSchem.methods
+// will be exposed as part of the userSchema object
+userSchema.methods.comparePassword = function(candidatePassword, callback) {
+  // bcrypt.compare will hash the candidatePassword using the salt inside
+  // this.passport and will than compare the hashes, once done will call
+  // function with isMatch true/false acourding to the comparison
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+    if (err) { return callback(err); }
+
+    callback(null, isMatch);
+  });
+};
+
 // Create the model class - this will load the model into mongo
 // i.e will create a collection named 'users' with the schema of userSchema
 const ModelClass = mongoose.model('users', userSchema);
